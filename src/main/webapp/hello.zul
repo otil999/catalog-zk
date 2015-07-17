@@ -1,0 +1,8 @@
+<window title="Hello and Vote" border="normal">
+    <zscript src="script/sayHello.zs"/>
+    <button label="Say Hello!" onClick="sayHello()"/>
+    <separator/>
+    Do you like ZK? <label id="label"/>    
+    <button label="Yes" onClick="label.value = self.label"/>    
+    <button label="No" onClick="label.value = self.label"/>    
+</window>
