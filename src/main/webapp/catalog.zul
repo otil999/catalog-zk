@@ -1,0 +1,19 @@
+<?page title="OtilSoft Media Catalog" contentType="text/html;charset=UTF-8"?>
+<zk>
+	<window id="window" apply="hu.otilsoft.catalog.Controller" border="none">
+		<menubar>
+			<menu label="Data">
+				<menupopup>
+					<menuitem id="content_type" label="Content types"/>
+					<menuitem label="Media"/>
+				</menupopup>
+			</menu>
+			<menu label="Search"/>
+			<menu label="Statistics"/>
+		</menubar>
+		<tabbox id="tabbox" visible="false">
+			<tabs id="tabs"></tabs>
+			<tabpanels id="tabpanels"></tabpanels>
+		</tabbox>
+	</window>
+</zk>

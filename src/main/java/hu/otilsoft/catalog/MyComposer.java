@@ -39,11 +39,11 @@ public class MyComposer extends Window implements Composer {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-    	Clients.showBusy(null, false);
+    	Clients.clearBusy();
     }
     
     public void onLongRun(Event event) {
-		Clients.showBusy("Execute...", true);
+		Clients.showBusy("Execute...");
 		Events.echoEvent("onLater", getParent(), null);    
     }
 }
