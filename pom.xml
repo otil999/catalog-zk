@@ -43,11 +43,13 @@
         </plugins>
     </build>
     <dependencies>
+        <!--
         <dependency>
             <groupId>hu.otilsoft.catalog</groupId>
             <artifactId>dao</artifactId>
             <version>[1.0.0,2.0.0)</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
