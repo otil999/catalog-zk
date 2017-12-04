@@ -1,19 +1,37 @@
 <?page title="OtilSoft Media Catalog" contentType="text/html;charset=UTF-8"?>
-<zk>
-	<window id="window" apply="hu.otilsoft.catalog.Controller" border="none">
-		<menubar>
-			<menu label="Data">
-				<menupopup>
-					<menuitem id="content_type" label="Content types"/>
-					<menuitem label="Media"/>
-				</menupopup>
-			</menu>
-			<menu label="Search"/>
-			<menu label="Statistics"/>
-		</menubar>
-		<tabbox id="tabbox" visible="false">
-			<tabs id="tabs"></tabs>
-			<tabpanels id="tabpanels"></tabpanels>
-		</tabbox>
-	</window>
-</zk>
+<window border="normal" width="100%" height="100%" id="window">
+	<borderlayout width="100%" apply="hu.otilsoft.catalog.Controller">
+		<north>
+			<div>Címsor csoda<bandbox/>
+				<menubar>
+					<menu label="Database">
+					</menu>
+					<menu label="Data">
+						<menupopup>
+							<menuitem id="media" label="Media"/>
+							<menuitem id="genre" label="Genre"/>
+							<menuseparator/>
+							<menuitem id="movie" label="Movie"/>
+							<menuitem id="game" label="Game"/>
+						</menupopup>
+					</menu>
+					<menu label="Search"/>
+					<menu label="Statistics"/>
+				</menubar>
+				<toolbar>
+				</toolbar>
+			</div>
+		</north>
+		<center id="center">
+			<tabbox id="tabbox" visible="false" height="100%">
+				<tabs id="tabs"></tabs>
+				<tabpanels id="tabpanels"></tabpanels>
+			</tabbox>
+		</center>
+		<south>
+			<toolbar>
+				sdfsdfdsfdsfdsfdsfdsfdsf
+			</toolbar>
+		</south>
+	</borderlayout>
+</window>
