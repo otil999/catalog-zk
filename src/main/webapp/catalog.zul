@@ -2,30 +2,34 @@
 <window border="normal" width="100%" height="100%" id="window">
 	<borderlayout width="100%" apply="hu.otilsoft.catalog.Controller">
 		<north>
-			<div>Címsor csoda<bandbox/>
-				<menubar>
-					<menu label="Database">
-					</menu>
-					<menu label="Data">
-						<menupopup>
-							<menuitem id="media" label="Media"/>
-							<menuitem id="genre" label="Genre"/>
-							<menuseparator/>
-							<menuitem id="movie" label="Movie"/>
-							<menuitem id="game" label="Game"/>
-						</menupopup>
-					</menu>
-					<menu label="Search"/>
-					<menu label="Statistics"/>
-				</menubar>
-				<toolbar>
-				</toolbar>
-			</div>
+		    <div>
+                <menubar>
+                    <menu label="Database">
+                        <menupopup>
+                            <menuitem id="export" label="Export..."/>
+                        </menupopup>
+                    </menu>
+                    <menu label="Data">
+                        <menupopup>
+                            <menuitem id="media" label="Media"/>
+                            <menuitem id="genre" label="Genre"/>
+                            <menuseparator/>
+                            <menuitem id="movie" label="Movie"/>
+                            <menuitem id="game" label="Game"/>
+                        </menupopup>
+                    </menu>
+                    <menu label="Search"/>
+                    <menu label="Statistics"/>
+                </menubar>
+                <toolbar>
+                </toolbar>
+            </div>
 		</north>
 		<center id="center">
 			<tabbox id="tabbox" visible="false" height="100%">
-				<tabs id="tabs"></tabs>
-				<tabpanels id="tabpanels"></tabpanels>
+			    <tabs id="tabs"/>
+			    <tabpanels id="tabpanels">
+                </tabpanels>
 			</tabbox>
 		</center>
 		<south>
