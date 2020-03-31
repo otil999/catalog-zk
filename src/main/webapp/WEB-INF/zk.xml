@@ -1,0 +1,6 @@
+<zk>
+    <library-property>
+        <name>org.zkoss.theme.preferred</name>
+        <value>sapphire</value>
+    </library-property>
+</zk>
