@@ -1,42 +1,57 @@
 <?page title="OtilSoft Media Catalog" contentType="text/html;charset=UTF-8"?>
-<!--<window border="normal" width="100%" height="100%" id="window" title="Catalog">-->
-	<borderlayout width="100%" apply="hu.otilsoft.catalog.Controller">
-		<north>
-		    <div>
-                <menubar>
-                    <menu label="Database">
-                        <menupopup>
-                            <menuitem id="export" label="Export..."/>
-                        </menupopup>
-                    </menu>
-                    <menu label="Data">
-                        <menupopup>
-                            <menuitem id="media" label="Media"/>
-                            <menuitem id="genre" label="Genre"/>
-                            <menuseparator/>
-                            <menuitem id="movie" label="Movie"/>
-                            <menuitem id="game" label="Game"/>
-                        </menupopup>
-                    </menu>
-                    <menu label="Search"/>
-                    <menu label="Statistics"/>
-                </menubar>
-                <toolbar>
-                    fgdgfgfgfdgfdgfgfggfd
-                </toolbar>
-            </div>
-		</north>
-		<center id="center">
-			<tabbox id="tabbox" visible="false" height="100%">
-			    <tabs id="tabs"/>
-			    <tabpanels id="tabpanels">
-                </tabpanels>
-			</tabbox>
-		</center>
-		<south>
-			<toolbar>
-				sdfsdfdsfdsfdsfdsfdsfdsf
-			</toolbar>
-		</south>
-	</borderlayout>
-<!--</window>-->
+<zk>
+<style>
+    body {
+        background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,113,121,1) 0%, rgba(0,212,255,1) 500%);
+    }
+</style>
+<vlayout width="90%" style="margin: auto; padding: 10px">
+    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MainViewModel')" border="normal">
+        <caption>OtilSoft Media Catalog</caption>
+        <menubar>
+            <menu label="Database">
+                <menupopup>
+                    <menuitem id="export" label="Export..."/>
+                </menupopup>
+            </menu>
+            <menu label="Data">
+                <menupopup>
+                    <menuitem id="media" label="Media" onClick='working.src="media.zul"' onMouseOver='statustext.value="kutya"'/>
+                    <menuitem id="storage-type" label="Storage type" image="image/storage_type.png" onClick='working.src="storagetype.zul"' onMouseOver='statustext.value="Managing storage types"'/>
+                    <menuitem id="storage" label="Storage" image="image/storage.png" onClick='working.src="storage.zul"' onMouseOver='statustext.value="Managing storages"'/>
+                    <menuitem id="genre" label="Genre" onClick="@command('enableGenre')"/>
+                    <menuitem id="series" label="Series" image="image/series.png" onClick='working.src="series.zul"' onMouseOver='statustext.value="Managing series"'/>
+                    <menuseparator/>
+                    <menuitem id="movie" label="Movie" image="image/film.png" onClick='working.src="movie.zul"' onMouseOver='statustext.value="kutya3"'/>
+                    <menuitem id="game" label="Game" image="image/game.png" onClick='working.src="game.zul"'/>
+                </menupopup>
+            </menu>
+            <menu label="Search"/>
+            <menu label="Random">
+                <menupopup>
+                    <menuitem label="Random least seen movie" onClick='working.src="movie.zul?action=randomLeastSeen"'/>
+                </menupopup>
+            </menu>
+            <menu label="Statistics"/>
+        </menubar>
+        <tabbox width="100%">
+            <tabs>
+                <tab label="Egyik">
+
+                </tab>
+                <tab label="Másik">
+
+                </tab>
+            </tabs>
+            <tabpanels>
+                <tabpanel>Cucc1</tabpanel>
+                <tabpanel>Cucc2</tabpanel>
+            </tabpanels>
+        </tabbox>
+        <include id="working" src="empty.zul" progressing="true"/>
+        <toolbar style="margin-top: 5px">
+            <label id="statustext" value="Idle"/>
+        </toolbar>
+    </window>
+</vlayout>
+</zk>

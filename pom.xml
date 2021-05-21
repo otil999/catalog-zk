@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>hu.otilsoft.catalog</groupId>
     <version>1.0.0</version>
-    <artifactId>zk</artifactId>
+    <artifactId>webapp</artifactId>
     <name>OtilSoft ZkCatalog</name>
     <packaging>war</packaging>
 
     <properties>
         <java.version>1.8</java.version>
-        <zk.version>9.0.0</zk.version>
+        <zk.version>9.5.0.2</zk.version>
     </properties>
 
 	<repositories>
@@ -18,7 +20,7 @@
 			<name>ZK CE Repository</name>
 			<url>http://mavensync.zkoss.org/maven2</url>
 		</repository>
-	</repositories>    
+	</repositories>
 
     <build>
         <plugins>
@@ -54,11 +56,11 @@
             <artifactId>zkbind</artifactId>
             <version>${zk.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.zkoss.zk</groupId>
-            <artifactId>zhtml</artifactId>
-            <version>${zk.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.zkoss.zk</groupId>-->
+<!--            <artifactId>zhtml</artifactId>-->
+<!--            <version>${zk.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.zkoss.zk</groupId>
             <artifactId>zul</artifactId>
@@ -68,6 +70,57 @@
             <groupId>org.zkoss.theme</groupId>
             <artifactId>sapphire</artifactId>
             <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.theme</groupId>
+            <artifactId>silvertail</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.theme</groupId>
+            <artifactId>breeze</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss.theme</groupId>
+            <artifactId>atlantic</artifactId>
+            <version>${zk.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.25.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.12.jre7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.9</version>
         </dependency>
     </dependencies>
 </project>

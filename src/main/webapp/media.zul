@@ -1,0 +1,36 @@
+<grid viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MediaViewModel')" model="@load(vm.media)" mold="paging" pageSize="20" pagingPosition="bottom">
+    <auxhead>
+        <auxheader colspan="4">List of existing media</auxheader>
+    </auxhead>
+    <columns>
+        <column label="Name" sort="auto(name)" hflex="1"/>
+        <column label="Created" sort="auto(created)" hflex="min"/>
+        <column label="Updated" sort="auto(updated)" hflex="min"/>
+        <column label="Action" hflex="min"/>
+    </columns>
+    <template name="model">
+        <row>
+            <textbox value="@bind(each.name)" width="100%"/>
+            <label value="@load(each.created)" style="white-space:pre"/>
+            <label value="@load(each.updated)" style="white-space:pre"/>
+            <hbox>
+                <button label="Save" image="image/save.png" mold="trendy">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+                <button label="Delete" image="image/delete.png" mold="trendy">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+            </hbox>
+        </row>
+    </template>
+    <foot>
+        <footer span="3">
+            <textbox hflex="2"/>
+        </footer>
+        <footer>
+            <button label="New" image="image/add.png" width="100%">
+                <custom-attributes org.zkoss.zul.image.preload="true"/>
+            </button>
+        </footer>
+    </foot>
+</grid>

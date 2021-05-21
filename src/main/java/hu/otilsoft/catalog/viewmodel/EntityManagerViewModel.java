@@ -1,0 +1,20 @@
+package hu.otilsoft.catalog.viewmodel;
+
+import hu.otilsoft.catalog.CatalogSessionListener;
+import org.zkoss.zk.ui.Sessions;
+
+import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
+import java.util.logging.Logger;
+
+abstract class EntityManagerViewModel {
+    private static final Logger logger = Logger.getLogger(EntityManagerViewModel.class.getName());
+    final EntityManager entityManager;
+
+    EntityManagerViewModel() {
+        HttpSession httpSession = (HttpSession) Sessions.getCurrent().getNativeSession();
+        logger.info("Session:" + httpSession);
+        entityManager = (EntityManager) httpSession.getAttribute(CatalogSessionListener.SESSION_ATTRIBUTE_NAME);
+        logger.info("Entity manager:" + entityManager);
+    }
+}

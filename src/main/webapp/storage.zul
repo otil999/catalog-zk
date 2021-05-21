@@ -1,0 +1,63 @@
+<vbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.StorageViewModel')" width="100%">
+    <grid model="@load(vm.storages)" mold="paging" pageSize="20" pagingPosition="bottom">
+        <auxhead>
+            <auxheader colspan="5">
+                <image src="image/storage_big.png"/>
+                List of existing storages
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Type" sort="auto(storageType.name)" hflex="1"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Updated" sort="auto(updated)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <textbox value="@bind(each.name)" width="100%"/>
+                <combobox model="@bind(vm.storageTypes)" selectedItem="@load(each.storageType)" readonly="true" width="100%">
+                    <template name="model">
+                        <comboitem label="${each.name}"/>
+                    </template>
+                </combobox>
+                <label value="@load(each.created)" style="white-space:pre"/>
+                <label value="@load(each.updated)" style="white-space:pre"/>
+                <hbox>
+                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('save', storage=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', storage=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+    <grid>
+        <auxhead>
+            <auxheader colspan="3">
+                <image src="image/register_big.png"/>
+                Register a new storage
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name"/>
+            <column label="Type"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <rows>
+            <row>
+                <textbox value="@bind(vm.newStorage.name)" width="100%"/>
+                <combobox model="@load(vm.storageTypes)" selectedItem="@bind(vm.newStorage.storageType)" readonly="true" width="100%">
+                    <template name="model">
+                        <comboitem label="${each.name}"/>
+                    </template>
+                </combobox>
+                <button label="New" image="image/add.png" onClick="@command('insert')">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+            </row>
+        </rows>
+    </grid>
+</vbox>

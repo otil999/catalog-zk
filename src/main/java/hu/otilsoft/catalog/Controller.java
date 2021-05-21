@@ -16,7 +16,7 @@ public class Controller extends SelectorComposer<Component> {
 		String menuItemId = x.getId();
 		switch (menuItemId) {
 			case "media":
-				Component c = Path.getComponent("/window/tabbox");
+				Component c = Path.getComponent("/tabbox");
 				c.setVisible(true);
 
 				Tab tab = new Tab("Content type");

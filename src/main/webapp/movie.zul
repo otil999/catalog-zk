@@ -1,0 +1,38 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MovieViewModel')" spacing="0" widths="100%,100%" width="100%">
+    <grid model="@load(vm.movies)" visible="@load(!vm.editing)" mold="paging" pageSize="20" pagingPosition="bottom">
+        <auxhead>
+            <auxheader colspan="5">
+                <hbox hflex="1" align="center" pack="start">
+                <image src="image/film_big.png"/>
+                <label value="List of existing movies" hflex="1"/>
+                <label value="Search"/>
+                <textbox hflex="min"/>
+                </hbox>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Original name" sort="auto(originalName)" hflex="1"/>
+            <column label="Release" sort="auto(release)" hflex="min"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.name)"/>
+                <label value="@load(each.originalName)"/>
+                <label value="@load(each.release)"/>
+                <label value="@load(each.created)" style="white-space:pre"/>
+                <hbox width="100%">
+                    <button label="Edit" image="image/edit.png" onClick="@command('edit', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png" onClick="@command('delete', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+    <include src="movie_edit.zul"/>
+</hbox>

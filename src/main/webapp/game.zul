@@ -1,0 +1,33 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.GameViewModel')" spacing="0" widths="100%,100%" width="100%">
+    <grid model="@load(vm.games)" visible="@load(!vm.editing)" mold="paging" pageSize="20" pagingPosition="bottom">
+        <auxhead>
+            <auxheader colspan="3">
+                <hbox hflex="1">
+                    <label value="List of existing games" hflex="1"/>
+                    <label value="Search"/>
+                    <textbox hflex="min"/>
+                </hbox>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.name)"/>
+                <label value="@load(each.created)" style="white-space:pre"/>
+                <hbox width="100%">
+                    <button label="Edit" image="image/edit.png" onClick="@command('edit', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+    <include src="game_edit.zul"/>
+</hbox>

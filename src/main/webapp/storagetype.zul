@@ -1,0 +1,51 @@
+<vbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.StorageTypeViewModel')">
+    <grid model="@load(vm.storageTypes)" mold="paging" pageSize="20" pagingPosition="bottom">
+        <auxhead>
+            <auxheader colspan="4">
+                <image src="image/storage_type_big.png"/>
+                List of existing storage types
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Updated" sort="auto(updated)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <textbox value="@bind(each.name)" width="100%"/>
+                <label value="@load(each.created)" style="white-space:pre"/>
+                <label value="@load(each.updated)" style="white-space:pre"/>
+                <hbox>
+                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', storageType=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', storageType=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+    <grid>
+        <auxhead>
+            <auxheader colspan="2">
+                <image src="image/register_big.png"/>
+                Register a new storage type
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <rows>
+            <row>
+                <textbox value="@bind(vm.newStorageType.name)" width="100%"/>
+                <button label="New" image="image/add.png" onClick="@command('insert')">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+            </row>
+        </rows>
+    </grid>
+</vbox>
