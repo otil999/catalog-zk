@@ -3,10 +3,13 @@
         <auxhead>
             <auxheader colspan="5">
                 <hbox hflex="1" align="center" pack="start">
-                <image src="image/film_big.png"/>
-                <label value="List of existing movies" hflex="1"/>
-                <label value="Search"/>
-                <textbox hflex="min"/>
+                    <image src="image/film_big.png"/>
+                    <label value="List of existing movies" hflex="1"/>
+                    <label value="Search"/>
+                    <textbox hflex="min"/>
+                    <button label="New" image="image/add.png" onClick="@command('edit')">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
                 </hbox>
             </auxheader>
         </auxhead>
@@ -22,7 +25,7 @@
                 <label value="@load(each.name)"/>
                 <label value="@load(each.originalName)"/>
                 <label value="@load(each.release)"/>
-                <label value="@load(each.created)" style="white-space:pre"/>
+                <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
                 <hbox width="100%">
                     <button label="Edit" image="image/edit.png" onClick="@command('edit', item=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>

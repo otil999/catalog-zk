@@ -7,7 +7,7 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/catalog"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://db:5432/catalog"/>
             <property name="javax.persistence.jdbc.user" value="catalog"/>
             <property name="javax.persistence.jdbc.password" value="catalog"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL10Dialect"/>

@@ -1,7 +1,7 @@
 <zk>
     <library-property>
         <name>org.zkoss.theme.preferred</name>
-        <value>breeze</value>
+        <value>sapphire</value>
     </library-property>
     <library-property>
         <name>org.zkoss.zul.Button.mold</name>

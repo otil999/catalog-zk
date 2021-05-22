@@ -1,6 +1,6 @@
 package hu.otilsoft.catalog.viewmodel;
 
-import hu.otilsoft.catalog.model.Media;
+import hu.otilsoft.catalog.Media;
 import hu.otilsoft.catalog.repository.MediaRepository;
 
 import java.util.List;

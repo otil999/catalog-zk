@@ -24,7 +24,7 @@
         </row>
         <row>
             <label value="Rating"/>
-            <textbox value="@bind(vm.editingMovie.rating)"/>
+            <textbox value="@bind(vm.editingMovie.rating) @converter(vm.doubleConverter)"/>
         </row>
         <row>
             <label value="Release"/>

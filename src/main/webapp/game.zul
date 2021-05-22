@@ -2,7 +2,8 @@
     <grid model="@load(vm.games)" visible="@load(!vm.editing)" mold="paging" pageSize="20" pagingPosition="bottom">
         <auxhead>
             <auxheader colspan="3">
-                <hbox hflex="1">
+                <hbox hflex="1" align="center" pack="start">
+                    <image src="image/game_big.png"/>
                     <label value="List of existing games" hflex="1"/>
                     <label value="Search"/>
                     <textbox hflex="min"/>

@@ -2,7 +2,7 @@
 <zk>
 <style>
     body {
-        background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(9,113,121,1) 0%, rgba(0,212,255,1) 500%);
+        background: url('image/background.jpg')
     }
 </style>
 <vlayout width="90%" style="margin: auto; padding: 10px">

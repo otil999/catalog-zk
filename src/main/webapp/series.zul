@@ -7,16 +7,16 @@
             </auxheader>
         </auxhead>
         <columns>
-            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Name" sort="auto(name)"/>
             <column label="Created" sort="auto(created)" hflex="min"/>
-            <column label="Updated" sort="auto(updated)" hflex="min"/>
+            <column label="Revision" sort="auto(revision)" hflex="min"/>
             <column label="Action" hflex="min"/>
         </columns>
         <template name="model">
             <row>
                 <textbox value="@bind(each.name)" width="100%"/>
-                <label value="@load(each.created)" style="white-space:pre"/>
-                <label value="@load(each.updated)" style="white-space:pre"/>
+                <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+                <label value="@load(each.revision)" style="white-space:pre"/>
                 <hbox>
                     <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', series=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>

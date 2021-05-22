@@ -7,24 +7,24 @@
             </auxheader>
         </auxhead>
         <columns>
-            <column label="Name" sort="auto(name)" hflex="1"/>
-            <column label="Type" sort="auto(storageType.name)" hflex="1"/>
+            <column label="Name" sort="auto(name)"/>
+            <column label="Type" sort="auto(storageType.name)" hflex="min"/>
             <column label="Created" sort="auto(created)" hflex="min"/>
-            <column label="Updated" sort="auto(updated)" hflex="min"/>
+            <column label="Revision" sort="auto(revision)" hflex="min"/>
             <column label="Action" hflex="min"/>
         </columns>
         <template name="model">
             <row>
                 <textbox value="@bind(each.name)" width="100%"/>
-                <combobox model="@bind(vm.storageTypes)" selectedItem="@load(each.storageType)" readonly="true" width="100%">
+                <combobox model="@bind(vm.storageTypes)" selectedItem="@load(each.storageType)" readonly="true">
                     <template name="model">
                         <comboitem label="${each.name}"/>
                     </template>
                 </combobox>
-                <label value="@load(each.created)" style="white-space:pre"/>
-                <label value="@load(each.updated)" style="white-space:pre"/>
+                <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+                <label value="@load(each.revision)" style="white-space:pre"/>
                 <hbox>
-                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('save', storage=each)">
+                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', storage=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>
                     <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', storage=each)">
@@ -43,13 +43,13 @@
         </auxhead>
         <columns>
             <column label="Name"/>
-            <column label="Type"/>
+            <column label="Type" hflex="min"/>
             <column label="Action" hflex="min"/>
         </columns>
         <rows>
             <row>
                 <textbox value="@bind(vm.newStorage.name)" width="100%"/>
-                <combobox model="@load(vm.storageTypes)" selectedItem="@bind(vm.newStorage.storageType)" readonly="true" width="100%">
+                <combobox model="@load(vm.storageTypes)" selectedItem="@bind(vm.newStorage.storageType)" readonly="true">
                     <template name="model">
                         <comboitem label="${each.name}"/>
                     </template>
