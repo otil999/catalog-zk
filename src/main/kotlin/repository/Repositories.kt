@@ -24,6 +24,13 @@ class SeriesRepository(entityManager: EntityManager) : AbstractRepository<Series
             .createQuery("select s from Series s", Series::class.java)
             .resultList
             .sortedWith { series1, series2 -> collator.compare(series1.name, series2.name) }
+
+    fun findByName(name: String): List<Series> =
+        entityManager
+            .createQuery("select s from Series s where lower(s.name) like :keyword", Series::class.java)
+            .setParameter("keyword", "${name.toLowerCase()}%")
+            .resultList
+            .sortedWith { series1, series2 -> collator.compare(series1.name, series2.name) }
 }
 
 
@@ -50,6 +57,25 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
             .resultList
             .sortedWith { movie1, movie2 -> collator.compare(movie1.name, movie2.name) }
 
+    fun findByName(name: String): List<Movie> =
+        entityManager
+            .createQuery("select m from Movie m where lower(m.name) like :keyword", Movie::class.java)
+            .setParameter("keyword", "${name.toLowerCase()}%")
+            .resultList
+            .sortedWith { movie1, movie2 -> collator.compare(movie1.name, movie2.name) }
+
+    fun findBySeries(series: Series): List<Movie> =
+        entityManager
+            .createQuery("select m from Movie m where m.series=:series order by m.seriesNum", Movie::class.java)
+            .setParameter("series", series)
+            .resultList
+
+    fun findByStorage(storage: Storage): List<Movie> =
+        entityManager
+            .createQuery("select m from Movie m where m.storage=:storage order by m.name", Movie::class.java)
+            .setParameter("storage", storage)
+            .resultList
+
     //    public Movie find(long id) {
     //        return entityManager
     //                .createQuery("select m from Movie m where m.id=:id", Movie.class)
@@ -75,11 +101,32 @@ class GameRepository(entityManager: EntityManager) : AbstractRepository<Game>(en
             .createQuery("select g from Game g", Game::class.java)
             .resultList
 
-    fun randomLeastSeen(): List<Game> {
+    fun findByName(name: String): List<Game> =
+        entityManager
+            .createQuery("select g from Game g where lower(g.name) like :keyword", Game::class.java)
+            .setParameter("keyword", "${name.toLowerCase()}%")
+            .resultList
+            .sortedWith { game1, game2 -> collator.compare(game1.name, game2.name) }
+
+    fun findBySeries(series: Series): List<Game> =
+        entityManager
+            .createQuery("select g from Game g where g.series=:series order by g.seriesNum", Game::class.java)
+            .setParameter("series", series)
+            .resultList
+
+    fun randomLeastPlayed(): List<Game> {
         val maxCounter = entityManager.createQuery("select min(g.counter) from Game g").singleResult as Int
         val list: List<Game> = entityManager
             .createQuery("select g from Game g where g.counter = :counter", Game::class.java)
             .setParameter("counter", maxCounter)
+            .resultList
+        val idx = Random().nextInt(list.size)
+        return listOf(list[idx])
+    }
+
+    fun randomPlayed(): List<Game> {
+        val list: List<Game> = entityManager
+            .createQuery("select g from Game g where g.counter >= 1", Game::class.java)
             .resultList
         val idx = Random().nextInt(list.size)
         return listOf(list[idx])
