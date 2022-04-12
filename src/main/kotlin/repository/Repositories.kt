@@ -1,11 +1,11 @@
 package hu.otilsoft.catalog.repository
 
-import hu.otilsoft.catalog.Game
-import hu.otilsoft.catalog.Media
-import hu.otilsoft.catalog.Movie
-import hu.otilsoft.catalog.Series
-import hu.otilsoft.catalog.Storage
-import hu.otilsoft.catalog.StorageType
+import hu.otilsoft.catalog.model.Game
+import hu.otilsoft.catalog.model.Media
+import hu.otilsoft.catalog.model.Movie
+import hu.otilsoft.catalog.model.Series
+import hu.otilsoft.catalog.model.Storage
+import hu.otilsoft.catalog.model.StorageType
 import java.util.Random
 import javax.persistence.EntityManager
 
@@ -18,7 +18,7 @@ class StorageTypeRepository(entityManager: EntityManager) : AbstractRepository<S
 }
 
 
-class SeriesRepository(entityManager: EntityManager) : AbstractRepository<Series>(entityManager) {
+class  SeriesRepository(entityManager: EntityManager) : AbstractRepository<Series>(entityManager) {
     override fun findAll(): List<Series> =
         entityManager
             .createQuery("select s from Series s", Series::class.java)
@@ -60,7 +60,7 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
     fun findByName(name: String): List<Movie> =
         entityManager
             .createQuery("select m from Movie m where lower(m.name) like :keyword", Movie::class.java)
-            .setParameter("keyword", "${name.toLowerCase()}%")
+            .setParameter("keyword", "%${name.toLowerCase()}%")
             .resultList
             .sortedWith { movie1, movie2 -> collator.compare(movie1.name, movie2.name) }
 
@@ -76,13 +76,6 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
             .setParameter("storage", storage)
             .resultList
 
-    //    public Movie find(long id) {
-    //        return entityManager
-    //                .createQuery("select m from Movie m where m.id=:id", Movie.class)
-    //                .setParameter("id", id)
-    //                .getSingleResult();
-    //    }
-
     fun randomLeastSeen(): List<Movie> {
         val maxCounter = entityManager.createQuery("select min(m.counter) from Movie m").singleResult as Int
         val list = entityManager
@@ -91,6 +84,12 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
             .resultList
         val idx = Random().nextInt(list.size)
         return listOf(list[idx])
+    }
+
+    fun save(entity: Movie, affectedSeries: Series?) {
+        super.save(entity)
+        affectedSeries?.let { entityManager.refresh(it) }
+        entity.series?.let { entityManager.refresh(it) }
     }
 }
 
