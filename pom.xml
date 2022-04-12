@@ -11,7 +11,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <zk.version>9.5.0.3</zk.version>
+        <zk.version>9.6.0.1</zk.version>
         <kotlin.version>1.4.32</kotlin.version>
         <kotlin.jvmTarget>${java.version}</kotlin.jvmTarget>
     </properties>
@@ -99,18 +99,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <configuration>-->
-<!--                    <compilerArguments>-->
-<!--                        <encoding>utf-8</encoding>-->
-<!--                    </compilerArguments>-->
-<!--                    <compilerArgument>-Xlint:all</compilerArgument>-->
-<!--                    <source>${java.version}</source>-->
-<!--                    <target>${java.version}</target>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -202,6 +190,16 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.9</version>
+        </dependency>
+        <dependency>
+            <groupId>hu.otilsoft.catalog</groupId>
+            <artifactId>persistence</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zkoss</groupId>
+            <artifactId>zkgooglecharts</artifactId>
+            <version>0.3.0</version>
         </dependency>
     </dependencies>
 </project>
