@@ -1,13 +1,19 @@
 <vbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.SeriesViewModel')">
     <grid model="@load(vm.series)" mold="paging" pageSize="20" pagingPosition="bottom">
         <auxhead>
-            <auxheader colspan="4">
-                <image src="image/series_big.png"/>
-                List of existing series
+            <auxheader colspan="6">
+                <hbox hflex="1" align="center" pack="start">
+                    <image src="image/series_big.png"/>
+                    <label value="List of existing series" hflex="1"/>
+                    <label value="Search"/>
+                    <textbox hflex="min" onChanging="@command('search', event=event)" value="@bind(vm.searchText)"/>
+                </hbox>
             </auxheader>
         </auxhead>
         <columns>
             <column label="Name" sort="auto(name)"/>
+            <column label="Number of Games" hflex="min" sort="auto(games.size)"/>
+            <column label="Number of Movies" hflex="min" sort="auto(movies.size)"/>
             <column label="Created" sort="auto(created)" hflex="min"/>
             <column label="Revision" sort="auto(revision)" hflex="min"/>
             <column label="Action" hflex="min"/>
@@ -15,13 +21,15 @@
         <template name="model">
             <row>
                 <textbox value="@bind(each.name)" width="100%"/>
+                <button label="@load(each.games.size())" width="100%" onClick="@global-command('listGames', action='series', series=each)"/>
+                <button label="@load(each.movies.size())" width="100%" onClick="@global-command('listMovies', action='series', series=each)"/>
                 <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
                 <label value="@load(each.revision)" style="white-space:pre"/>
                 <hbox>
-                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', series=each)">
+                    <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', item=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>
-                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', series=each)">
+                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', item=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>
                 </hbox>
