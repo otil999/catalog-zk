@@ -1,0 +1,47 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.GameListViewModel')" spacing="0" widths="100%,100%" width="100%">
+    <grid model="@load(vm.games)" mold="paging" pageSize="20" pagingPosition="bottom">
+        <auxhead>
+            <auxheader colspan="6">
+                <hbox hflex="1" align="center" pack="start">
+                    <image src="image/game_big.png"/>
+                    <label value="List of existing games" hflex="1"/>
+                    <label value="Search" visible="@load(vm.searchVisible)"/>
+                    <textbox hflex="min" visible="@load(vm.searchVisible)" onChanging="@command('search', event=event)" value="@bind(vm.searchText)"/>
+                    <button label="New" image="image/add.png" onClick="@global-command('editGame')">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Refresh" image="image/refresh.png" onClick="@command('refresh')" visible='@load(vm.refreshVisible)'>
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sort="auto(name)" hflex="1"/>
+            <column label="Series" sort="auto(series.name)" hflex="min"/>
+            <column label="Series number" sort="auto(seriesNum)" hflex="min"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Played" sort="auto(counter)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.name)"/>
+                <hbox>
+                    <button label="@load(each.series.name)" onClick="@command('showSeriesItems', series=each.series)" visible="@load(each.belongToSeries)"/>
+                </hbox>
+                <label value="@load(each.seriesNum)"/>
+                <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+                <label value="@load(each.counter)"/>
+                <hbox width="100%">
+                    <button label="Edit" image="image/edit.png" onClick="@global-command('editGame', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png" onClick="@command('delete', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+</hbox>

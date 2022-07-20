@@ -1,0 +1,20 @@
+<window apply="org.zkoss.bind.BindComposer" id="settingsWin" viewModel="@id('settingsVm') @init('hu.otilsoft.catalog.viewmodel.SettingsViewModel')" visible="false" width="500" border="normal" title="Settings" closable="true" mode="modal">
+    <grid hflex="min">
+        <rows>
+            <row>
+                <label value="Type of connection"/>
+                <combobox>
+                    <comboitem label="Directly to database"/>
+                    <comboitem label="Through API Gateway"/>
+                </combobox>
+            </row>
+        </rows>
+        <foot>
+            <footer span="2" align="right" width="100%">
+                <button label="Save" image="image/save.png" onClick="@command('detach')">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+            </footer>
+        </foot>
+    </grid>
+</window>

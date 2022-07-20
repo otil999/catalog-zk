@@ -1,0 +1,51 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MovieListViewModel')" width="100%">
+    <grid model="@load(vm.movies)" mold="paging" pageSize="20" pagingPosition="bottom" width="100%" height="100%">
+        <auxhead>
+            <auxheader colspan="8">
+                <hbox width="100%" align="center" pack="start">
+                    <image src="image/film_big.png"/>
+                    <label value="List of existing movies" hflex="1"/>
+                    <label value="Search" visible="@load(vm.searchVisible)"/>
+                    <textbox hflex="min" visible="@load(vm.searchVisible)" onChanging="@command('search', event=event)" value="@bind(vm.searchText)"/>
+                    <button label="New" image="image/add.png" onClick="@global-command('editMovie')">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Refresh" image="image/refresh.png" onClick="@command('refresh')" visible='@load(vm.refreshVisible)'>
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name" sortAscending="@load(vm.ascComparator)" sortDescending="@load(vm.descComparator)"/>
+            <column label="Original name" sort="auto(originalName)"/>
+            <column label="Release" sort="auto(release)" hflex="min"/>
+            <column label="Series" sort="auto(series.name)" hflex="min"/>
+            <column label="Series number" sort="auto(seriesNum)" hflex="min"/>
+            <column label="Viewed" sort="auto(counter)" hflex="min"/>
+            <column label="Created" sort="auto(created)" hflex="min"/>
+            <column label="Action" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.name)" style="white-space:pre"/>
+                <label value="@load(each.originalName)" style="white-space:pre"/>
+                <label value="@load(each.release)"/>
+                <hbox>
+                    <button label="@load(each.series.name)" onClick="@command('showSeriesItems', series=each.series)" visible="@load(each.belongToSeries)"/>
+                </hbox>
+                <label value="@load(each.seriesNum)"/>
+                <label value="@load(each.counter)" style="white-space:pre"/>
+                <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+                <hbox>
+                    <button label="Edit" image="image/edit.png" onClick="@global-command('editMovie', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Delete" image="image/delete.png" onClick="@command('delete', item=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                </hbox>
+            </row>
+        </template>
+    </grid>
+</hbox>

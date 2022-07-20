@@ -86,6 +86,12 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
         return listOf(list[idx])
     }
 
+    fun recentlyViewed(): List<Movie> =
+        entityManager
+            .createQuery("select m from Movie m order by updated desc", Movie::class.java)
+            .resultList
+            .subList(0, 20)
+
     fun save(entity: Movie, affectedSeries: Series?) {
         super.save(entity)
         affectedSeries?.let { entityManager.refresh(it) }

@@ -1,0 +1,32 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MovieListViewModel')" width="100%">
+    <grid model="@load(vm.movies)" mold="paging" pageSize="20" pagingPosition="bottom" width="100%" height="100%">
+        <auxhead>
+            <auxheader colspan="7">
+                <hbox width="100%" align="center" pack="start">
+                    <image src="image/film_big.png"/>
+                    <label value="List of recently viewed movies" hflex="1"/>
+                </hbox>
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column label="Name"/>
+            <column label="Original name"/>
+            <column label="Release" hflex="min"/>
+            <column label="Series" hflex="min"/>
+            <column label="Series number" hflex="min"/>
+            <column label="Viewed" hflex="min"/>
+            <column label="Last viewed" hflex="min"/>
+        </columns>
+        <template name="model">
+            <row>
+                <label value="@load(each.name)" style="white-space:pre"/>
+                <label value="@load(each.originalName)" style="white-space:pre"/>
+                <label value="@load(each.release)"/>
+                <label value="@load(each.series.name)"/>
+                <label value="@load(each.seriesNum)"/>
+                <label value="@load(each.counter)" style="white-space:pre"/>
+                <label value="@load(each.updated) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+            </row>
+        </template>
+    </grid>
+</hbox>

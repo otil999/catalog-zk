@@ -15,15 +15,21 @@
         </columns>
         <template name="model">
             <row>
-                <textbox value="@bind(each.name)" width="100%"/>
-                <combobox model="@bind(vm.storageTypes)" selectedItem="@load(each.storageType)" readonly="true">
-                    <template name="model">
-                        <comboitem label="${each.name}"/>
+                <textbox value="@load(each.name)" width="100%"/>
+                <combobox model="@load(vm.storageTypes)" selectedItem="@bind(each.storageType)" readonly="true">
+                    <template name="model" var="storageTypeItem">
+                        <comboitem label="${storageTypeItem.name}" value="${storageTypeItem}"/>
                     </template>
                 </combobox>
                 <label value="@load(each.created) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
                 <label value="@load(each.revision)" style="white-space:pre"/>
                 <hbox>
+                    <button label="Movies" image="image/film.png" mold="trendy" onClick="@global-command('showMovieByStorage', storage=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
+                    <button label="Games" image="image/game.png" mold="trendy" onClick="@global-command('showGame', storage=each)">
+                        <custom-attributes org.zkoss.zul.image.preload="true"/>
+                    </button>
                     <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', storage=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>

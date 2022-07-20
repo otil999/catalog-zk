@@ -1,31 +1,32 @@
 package hu.otilsoft.catalog.viewmodel
 
-import hu.otilsoft.catalog.StorageType
+import hu.otilsoft.catalog.model.StorageType
 import hu.otilsoft.catalog.repository.StorageTypeRepository
 import java.lang.RuntimeException
 import org.zkoss.bind.annotation.BindingParam
 import org.zkoss.bind.annotation.Command
+import org.zkoss.bind.annotation.GlobalCommand
 import org.zkoss.bind.annotation.NotifyChange
 import org.zkoss.zul.Messagebox
 
 
 class StorageTypeViewModel : EntityManagerViewModel() {
-    private val repository = StorageTypeRepository(entityManager)
-    var storageTypes = repository.findAll()
+    private val repository: StorageTypeRepository by lazy { StorageTypeRepository(entityManager) }
+    var storageTypes = repository.findAll().toMutableList()
     var newStorageType = StorageType()
 
-    @Command
+    @GlobalCommand
     @NotifyChange("storageTypes")
-    fun refresh() {
-        storageTypes = repository.findAll()
+    fun showStorageType() {
+        storageTypes = repository.findAll().toMutableList()
     }
 
-    @Command
+    @GlobalCommand
     @NotifyChange("storageTypes", "newStorageType")
-    fun insert() {
+    fun insertStorageType() {
         try {
             repository.save(newStorageType)
-            storageTypes = repository.findAll()
+            storageTypes.add(newStorageType)
             newStorageType = StorageType()
         } catch (ex: RuntimeException) {
             Messagebox.show(ex.message, "Warning", Messagebox.OK, Messagebox.EXCLAMATION)
@@ -37,16 +38,15 @@ class StorageTypeViewModel : EntityManagerViewModel() {
     fun update(@BindingParam storageType: StorageType) {
         try {
             repository.save(storageType)
-            storageTypes = repository.findAll()
         } catch (ex: RuntimeException) {
             Messagebox.show(ex.message, "Warning", Messagebox.OK, Messagebox.EXCLAMATION)
         }
     }
 
-    @Command
+    @GlobalCommand
     @NotifyChange("storageTypes")
-    fun delete(@BindingParam storageType: StorageType) {
+    fun deleteStorageType(@BindingParam storageType: StorageType) {
         repository.delete(storageType)
-        storageTypes = repository.findAll()
+        storageTypes.remove(storageType)
     }
 }

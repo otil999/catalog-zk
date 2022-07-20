@@ -2,56 +2,94 @@
 <zk>
 <style>
     body {
-        background: url('image/background.jpg')
+        background: url('image/background.jpg');
+        margin: auto;
+        padding: 15px;
     }
 </style>
-<vlayout width="90%" style="margin: auto; padding: 10px">
-    <window apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.MainViewModel')" border="normal">
-        <caption>OtilSoft Media Catalog</caption>
-        <menubar>
-            <menu label="Database">
-                <menupopup>
-                    <menuitem id="export" label="Export..."/>
-                </menupopup>
-            </menu>
-            <menu label="Data">
-                <menupopup>
-                    <menuitem id="media" label="Media" onClick='working.src="media.zul"' onMouseOver='statustext.value="kutya"'/>
-                    <menuitem id="storage-type" label="Storage type" image="image/storage_type.png" onClick='working.src="storagetype.zul"' onMouseOver='statustext.value="Managing storage types"'/>
-                    <menuitem id="storage" label="Storage" image="image/storage.png" onClick='working.src="storage.zul"' onMouseOver='statustext.value="Managing storages"'/>
-                    <menuitem id="genre" label="Genre" onClick="@command('enableGenre')"/>
-                    <menuitem id="series" label="Series" image="image/series.png" onClick='working.src="series.zul"' onMouseOver='statustext.value="Managing series"'/>
-                    <menuseparator/>
-                    <menuitem id="movie" label="Movie" image="image/film.png" onClick='working.src="movie.zul"' onMouseOver='statustext.value="kutya3"'/>
-                    <menuitem id="game" label="Game" image="image/game.png" onClick='working.src="game.zul"'/>
-                </menupopup>
-            </menu>
-            <menu label="Search"/>
-            <menu label="Random">
-                <menupopup>
-                    <menuitem label="Random least seen movie" onClick='working.src="movie.zul?action=randomLeastSeen"'/>
-                </menupopup>
-            </menu>
-            <menu label="Statistics"/>
-        </menubar>
-        <tabbox width="100%">
-            <tabs>
-                <tab label="Egyik">
-
-                </tab>
-                <tab label="Másik">
-
-                </tab>
-            </tabs>
-            <tabpanels>
-                <tabpanel>Cucc1</tabpanel>
-                <tabpanel>Cucc2</tabpanel>
-            </tabpanels>
-        </tabbox>
-        <include id="working" src="empty.zul" progressing="true"/>
-        <toolbar style="margin-top: 5px">
-            <label id="statustext" value="Idle"/>
-        </toolbar>
-    </window>
-</vlayout>
+<window id="mainWin" apply="org.zkoss.bind.BindComposer" viewModel="@id('mainVm') @init('hu.otilsoft.catalog.viewmodel.MainViewModel')" border="normal" width="100%">
+    <menubar>
+        <menu label="System">
+            <menupopup>
+                <menuitem id="config" label="Configuration..." onClick="@command('showSettings')"/>
+                <menuitem id="export" label="Export..."/>
+            </menupopup>
+        </menu>
+        <menu label="Data">
+            <menupopup>
+                <menuitem id="menuitem-storage-type" label="Storage type" image="image/storage_type.png" onClick="@global-command('showStorageType')" onMouseOver='statustext.value="Managing storage types"'/>
+                <menuitem id="menuitem-storage" label="Storage" image="image/storage.png" onClick="@global-command('showStorage')" onMouseOver='statustext.value="Managing storages"'/>
+                <menuitem id="menuitem-series" label="Series" image="image/series.png" onClick="@global-command('showSeries')" onMouseOver='statustext.value="Managing series"'/>
+                <menuseparator/>
+                <menuitem id="menuitem-movie" label="Movie" image="image/film.png" onClick="@global-command('listMovies')" onMouseOver='statustext.value="Managing movies"'/>
+                <menuitem id="menuitem-game" label="Game" image="image/game.png" onClick="@global-command('listGames')" onMouseOver='statustext.value="Managing games"'/>
+            </menupopup>
+        </menu>
+        <menu label="Search"/>
+        <menu label="Random">
+            <menupopup>
+                <menuitem id="menuitem-random-least-seen-movie" label="Random least seen movie" onClick="@global-command('listMovies', action='randomLeastSeen')" onMouseOver='statustext.value="Finds a least seen movie randomly"'/>
+                <menuseparator/>
+                <menuitem id="menuitem-random-least-played-game" label="Random least played game" onClick="@global-command('listGames', action='randomLeastPlayed')" onMouseOver='statustext.value="Finds a least played game randomly"'/>
+                <menuitem id="menuitem-random-played-game" label="Random played game" onClick="@global-command('listGames', action='randomPlayed')" onMouseOver='statustext.value="Finds an already played game randomly"'/>
+            </menupopup>
+        </menu>
+        <menu label="Statistics">
+            <menupopup>
+                <menuitem id="menuitem-stat-counts" label="Number of assets" onClick="@global-command('statNumberOfAssets')" onMouseOver='statustext.value="Show the history graph of number of items"'/>
+                <menuitem id="menuitem-stat-movie-history" label="Recently viewed movies" onClick="@global-command('statRecentlyViewedMovies')" onMouseOver='statustext.value="List of recently viewed movies"'/>
+                <menuitem id="menuitem-stat-game-history" label="Last played games" onClick="@global-command('statLastPlayedGames')" onMouseOver='statustext.value="List of recently played games"'/>
+            </menupopup>
+        </menu>
+    </menubar>
+    <tabbox hflex="max">
+        <tabs>
+            <tab label="Data"/>
+            <tab label="Másik"/>
+        </tabs>
+        <tabpanels>
+            <tabpanel>
+                <hbox>
+                    <vbox>
+                        <hbox width="100%">
+                            <button image="image/storage_type_big.png" onClick="@global-command('showStorageType')"/>
+                            <button image="image/storage_big.png" onClick="@global-command('showStorage')"/>
+                            <button image="image/series_big.png" onClick="@global-command('showSeries')"/>
+                        </hbox>
+                        <hbox width="100%" pack="center">
+                            <label value="Base"/>
+                        </hbox>
+                    </vbox>
+                    <space bar="true" height="100%" spacing="5px"/>
+                    <vbox>
+                        <hbox width="100%">
+                            <button image="image/film_big.png" onClick="@global-command('listMovies')"/>
+                            <button image="image/game_big.png" onClick="@global-command('listGames')"/>
+                        </hbox>
+                        <hbox width="100%" pack="center">
+                            <label value="Assets"/>
+                        </hbox>
+                    </vbox>
+                </hbox>
+            </tabpanel>
+            <tabpanel>Cucc2</tabpanel>
+        </tabpanels>
+    </tabbox>
+    <div visible="@load(mainVm.emptyVisible)">
+        OtilSoft Media Catalog
+    </div>
+    <include id="content-storagetype" src="storagetype.zul" progressing="true" visible="@load(mainVm.storageTypeVisible)"/>
+    <include id="content-storage" src="storage.zul" progressing="true" visible="@load(mainVm.storageVisible)"/>
+    <include id="content-series" src="series.zul" progressing="true" visible="@load(mainVm.seriesVisible)"/>
+    <include id="content-list-movie" src="movie-list.zul" progressing="true" visible="@load(mainVm.movieListVisible)"/>
+    <include id="content-edit-movie" src="movie-edit.zul" progressing="true" visible="@load(mainVm.movieEditVisible)"/>
+    <include id="content-list-game" src="game-list.zul" progressing="true" visible="@load(mainVm.gameListVisible)"/>
+    <include id="content-edit-game" src="game-edit.zul" progressing="true" visible="@load(mainVm.gameEditVisible)"/>
+    <include id="content-stat" src="stat.zul" progressing="true" visible="@load(mainVm.statVisible)"/>
+    <include id="content-stat-recently-viewed" src="stat-recently-viewed.zul" progressing="true" visible="@load(mainVm.statRecentlyViewedVisible)"/>
+    <toolbar>
+        <label id="statustext" value="Idle"/>
+    </toolbar>
+</window>
+<div style="height: 15px"/>
 </zk>

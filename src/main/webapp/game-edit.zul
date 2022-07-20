@@ -1,0 +1,93 @@
+<hbox viewModel="@id('vm') @init('hu.otilsoft.catalog.viewmodel.GameEditViewModel')" spacing="0" widths="100%,100%" width="100%">
+    <grid>
+        <auxhead>
+            <auxheader colspan="2">
+                <image src="image/edit_big.png"/>
+                Editing game
+            </auxheader>
+        </auxhead>
+        <columns>
+            <column hflex="min"/>
+            <column hflex="1"/>
+        </columns>
+        <rows>
+            <row>
+                <label value="Name"/>
+                <textbox value="@bind(vm.editingGame.name)" width="100%"/>
+            </row>
+            <row>
+                <label value="Counter"/>
+                <spinner value="@bind(vm.editingGame.counter)"/>
+            </row>
+            <row>
+                <label value="Rating"/>
+                <textbox value="@bind(vm.editingGame.rating)"/>
+            </row>
+            <row>
+                <label value="Release"/>
+                <textbox value="@bind(vm.editingGame.release)"/>
+            </row>
+            <row>
+                <label value="Link"/>
+                <textbox value="@bind(vm.editingGame.link)" width="100%"/>
+            </row>
+            <row>
+                <label value="Media"/>
+                <combobox model="@load(vm.media)" selectedItem="@bind(vm.editingGame.media)">
+                    <template name="model">
+                        <comboitem label="${each.name}"/>
+                    </template>
+                </combobox>
+            </row>
+            <row>
+                <label value="Storage"/>
+                <combobox model="@load(vm.storages)" selectedItem="@bind(vm.editingGame.storage)">
+                    <template name="model">
+                        <comboitem label="${each.name} (${each.storageType.name})"/>
+                    </template>
+                </combobox>
+            </row>
+            <row>
+                <label value="Series"/>
+                <combobox model="@load(vm.series)" selectedItem="@bind(vm.editingGame.series)">
+                    <template name="model">
+                        <comboitem label="${each.name}"/>
+                    </template>
+                </combobox>
+            </row>
+            <row>
+                <label value="Series number"/>
+                <spinner value="@bind(vm.editingGame.seriesNum)"/>
+            </row>
+            <row>
+                <label value="Long term"/>
+                <checkbox value="@bind(vm.editingGame.longTerm)"/>
+            </row>
+            <row>
+                <label value="Created"/>
+                <label value="@load(vm.editingGame.created) @converter(vm.localDateTimeConverter)"/>
+            </row>
+            <row>
+                <label value="Updated"/>
+                <label value="@load(vm.editingGame.updated) @converter(vm.localDateTimeConverter)"/>
+            </row>
+            <row>
+                <label value="Revision"/>
+                <label value="@load(vm.editingGame.revision)"/>
+            </row>
+        </rows>
+        <foot>
+            <footer span="2" align="right">
+                <button label="Save" image="image/save.png" onClick="@command('save')">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+                <button label="Delete" image="image/delete.png" onClick="@command('delete') @global-command('listGames)'">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+                <button label="Cancel" image="image/cancel.png" onClick="@global-command('listGames')">
+                    <custom-attributes org.zkoss.zul.image.preload="true"/>
+                </button>
+            </footer>
+        </foot>
+    </grid>
+</hbox>

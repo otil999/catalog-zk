@@ -1,80 +1,193 @@
 package hu.otilsoft.catalog.viewmodel
 
-import hu.otilsoft.catalog.CatalogSessionListener
-import hu.otilsoft.catalog.Media
-import hu.otilsoft.catalog.Movie
-import hu.otilsoft.catalog.repository.MediaRepository
-import hu.otilsoft.catalog.repository.MovieRepository
-import hu.otilsoft.catalog.repository.SeriesRepository
-import java.util.ArrayList
-import javax.persistence.EntityManager
-import javax.servlet.http.HttpSession
+import hu.otilsoft.catalog.model.Game
+import org.zkoss.bind.annotation.BindingParam
 import org.zkoss.bind.annotation.Command
+import org.zkoss.bind.annotation.GlobalCommand
 import org.zkoss.bind.annotation.NotifyChange
-import org.zkoss.zk.ui.Sessions
+import org.zkoss.zk.ui.Executions
+import org.zkoss.zul.Window
 
 
 class MainViewModel {
-    private val mediaRepository: MediaRepository
-    private val seriesRepository: SeriesRepository
-    private val movieRepository: MovieRepository
+    var emptyVisible = true
+    var storageTypeVisible = false
+    var storageVisible = false
+    var seriesVisible = false
+    var movieListVisible = false
+    var movieEditVisible = false
+    var gameListVisible = false
+    var gameEditVisible = false
+    var statVisible = false
+    var statRecentlyViewedVisible = false
 
-    var visibleMedia = false
-    var visibleGenre = false
-    var visibleMovie = false
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun showStorageType() {
+        emptyVisible = false
+        storageTypeVisible = true
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
 
-//        get() = mediaRepository.findAll()
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun showStorage() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = true
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
 
-    //    var media
-//        private set
-//    var movies: List<Movie> = ArrayList()
-//        private set
-//    var editingMovie = Movie()
-//
-//    private fun reloadMedia() {
-//        media = mediaRepository.findAll()
-//    }
-//
-//    val storages: List<Media>
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun showSeries() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = true
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
 
-    init {
-        val httpSession = Sessions.getCurrent().nativeSession as HttpSession
-        val entityManager = httpSession.getAttribute(CatalogSessionListener.SESSION_ATTRIBUTE_NAME) as EntityManager
-        mediaRepository = MediaRepository(entityManager)
-        seriesRepository = SeriesRepository(entityManager)
-        movieRepository = MovieRepository(entityManager)
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun listMovies() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = true
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
+
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun editMovie() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = true
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
+
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun showMovieByStorage() {
+        listMovies()
+    }
+
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun listGames() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = true
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+    }
+
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun editGame(@BindingParam("item") game: Game?) {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = true
+        statVisible = false
+        statRecentlyViewedVisible = false
     }
 
     @Command
-    @NotifyChange("visibleMedia", "visibleGenre", "visibleMovie", "editing", "media")
-    fun enableMedia() {
-        visibleMedia = true
-        visibleGenre = false
-        visibleMovie = false
+    fun showSettings() {
+        val win = Executions.createComponents("/settings.zul", null, null) as Window
+        win.doModal()
     }
 
-    @Command
-    @NotifyChange("visibleMedia", "visibleGenre", "visibleMovie", "editing")
-    fun enableGenre() {
-        visibleMedia = false
-        visibleGenre = true
-        visibleMovie = false
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun statNumberOfAssets() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = true
+        statRecentlyViewedVisible = false
     }
 
-    @Command
-    @NotifyChange("visibleMedia", "visibleGenre", "visibleMovie", "editing", "movies")
-    fun enableMovie() {
-        visibleMedia = false
-        visibleGenre = false
-        visibleMovie = true
-    }
-
-    @Command
-    @NotifyChange("visibleMedia", "visibleGenre", "visibleMovie", "editing", "movies")
-    fun randomLeastSeenMovie() {
-//        movies = movieRepository.randomLeastSeen()
-        visibleMedia = false
-        visibleGenre = false
-        visibleMovie = true
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+    )
+    fun statRecentlyViewedMovies() {
+        listMovies()
+        movieListVisible = false
+        statRecentlyViewedVisible = true
     }
 }

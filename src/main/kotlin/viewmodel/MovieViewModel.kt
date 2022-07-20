@@ -1,35 +1,52 @@
 package hu.otilsoft.catalog.viewmodel
 
-import hu.otilsoft.catalog.Movie
-import hu.otilsoft.catalog.Series
-import hu.otilsoft.catalog.repository.MediaRepository
-import hu.otilsoft.catalog.repository.MovieRepository
-import hu.otilsoft.catalog.repository.SeriesRepository
-import hu.otilsoft.catalog.repository.StorageRepository
-import org.zkoss.bind.annotation.BindingParam
-import org.zkoss.bind.annotation.Command
-import org.zkoss.bind.annotation.Init
-import org.zkoss.bind.annotation.NotifyChange
-import org.zkoss.bind.annotation.QueryParam
+import hu.otilsoft.catalog.model.Movie
+import hu.otilsoft.catalog.model.Series
+import hu.otilsoft.catalog.model.Storage
+import hu.otilsoft.catalog.repository.*
+import org.zkoss.bind.annotation.*
 import org.zkoss.zk.ui.Executions
+import org.zkoss.zk.ui.event.InputEvent
 import org.zkoss.zul.Messagebox
 
 
 class MovieViewModel : EntityManagerViewModel() {
-    private val movieRepository = MovieRepository(entityManager)
-    private val mediaRepository = MediaRepository(entityManager)
-    private val seriesRepository = SeriesRepository(entityManager)
-    private val storageRepository = StorageRepository(entityManager)
+    private val movieRepository: MovieRepository by lazy { MovieRepository(entityManager) }
+    private val mediaRepository: MediaRepository by lazy { MediaRepository(entityManager) }
+    private val seriesRepository: SeriesRepository by lazy { SeriesRepository(entityManager) }
+    private val storageRepository: StorageRepository by lazy { StorageRepository(entityManager) }
     var editingMovie = Movie()
     var editing = false
     var movies = mutableListOf<Movie>()
     val media = mediaRepository.findAll()
-    val series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }.toMutableList()
-    val storages = storageRepository.findAll()
+    var series = mutableListOf<Series>()
+    var storages = mutableListOf<Storage>()
+    var action = ""
+    var searchText = ""
 
-    @Init
-    fun init(@QueryParam("action") action: String?) {
-        movies = (if ("randomLeastSeen" == action) movieRepository.randomLeastSeen() else movieRepository.findAll()).toMutableList()
+    @GlobalCommand
+    @NotifyChange("movies", "refreshVisible", "searchVisible", "searchText", "editing", "storages")
+    fun showMovie(@BindingParam("action") action: String?, @BindingParam("series") series: Series?) {
+        this.action = action ?: ""
+        searchText = ""
+        editing = false
+        movies = when (action) {
+            "series" -> movieRepository.findBySeries(series ?: Series())
+            "randomLeastSeen" -> movieRepository.randomLeastSeen()
+            else -> movieRepository.findAll()
+        }.toMutableList()
+        storages = storageRepository.findAll().toMutableList()
+        reloadSeries()
+    }
+
+    @GlobalCommand
+    @NotifyChange("movies", "refreshVisible", "searchVisible", "searchText", "editing", "storages")
+    fun showMovieByStorage(@BindingParam("storage") storage: Storage) {
+        searchText = ""
+        editing = false
+        movies = movieRepository.findByStorage(storage).toMutableList()
+        storages = storageRepository.findAll().toMutableList()
+        reloadSeries()
     }
 
     @Command
@@ -37,6 +54,11 @@ class MovieViewModel : EntityManagerViewModel() {
     fun edit(@BindingParam("item") movie: Movie?) {
         editing = true
         editingMovie = movie ?: Movie()
+        reloadSeries()
+    }
+
+    private fun reloadSeries() {
+        series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }
     }
 
     @Command
@@ -48,10 +70,15 @@ class MovieViewModel : EntityManagerViewModel() {
     @Command
     @NotifyChange("editing", "movies")
     fun save() {
-        movieRepository.save(editingMovie)
-        movies.add(editingMovie)
-        Messagebox.show("Movie is saved successfully.", "Success", Messagebox.OK, Messagebox.INFORMATION)
-        cancelEditing()
+        if (editingMovie.series?.name?.isBlank() == true) {
+            editingMovie.series = null
+        }
+        try {
+            movieRepository.save(editingMovie)
+            Messagebox.show("Movie is saved successfully.", "Success", Messagebox.OK, Messagebox.INFORMATION)
+        } catch (ex: Exception) {
+            Messagebox.show("Error when saving movie.", "Error", Messagebox.OK, Messagebox.ERROR)
+        }
     }
 
     @Command
@@ -64,7 +91,7 @@ class MovieViewModel : EntityManagerViewModel() {
     }
 
     @Command
-    @NotifyChange("editing", "editingMovie", "movies")
+    @NotifyChange("editing", "movies")
     fun deleteEditing() {
         delete(editingMovie)
     }
@@ -73,4 +100,31 @@ class MovieViewModel : EntityManagerViewModel() {
     fun openLink() {
         Executions.getCurrent().sendRedirect(editingMovie.link, "_blank")
     }
+
+    @Command
+    @NotifyChange("movies")
+    fun refresh() {
+        movies = movieRepository.randomLeastSeen().toMutableList()
+    }
+
+    fun isRefreshVisible() = action.isNotBlank()
+
+    fun isSearchVisible() = !isRefreshVisible()
+
+    @Command
+    @NotifyChange("movies", "refreshVisible", "searchVisible")
+    fun showSeriesItems(@BindingParam("series") series: Series) {
+        movies = movieRepository.findBySeries(series).toMutableList()
+        action = ""
+    }
+
+    @Command
+    @NotifyChange("movies", "searchText")
+    fun search(@BindingParam("event") event: InputEvent) {
+        searchText = event.value
+        movies = movieRepository.findByName(searchText).toMutableList()
+    }
+
+    val ascComparator = Comparator<Movie> { movie1, movie2 -> movieRepository.collator.compare(movie1.name, movie2.name) }
+    val descComparator = Comparator<Movie> { movie1, movie2 -> movieRepository.collator.compare(movie2.name, movie1.name) }
 }

@@ -21,7 +21,7 @@
                     <button label="Save" image="image/save.png" mold="trendy" onClick="@command('update', storageType=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>
-                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@command('delete', storageType=each)">
+                    <button label="Delete" image="image/delete.png" mold="trendy" onClick="@global-command('deleteStorageType', storageType=each)">
                         <custom-attributes org.zkoss.zul.image.preload="true"/>
                     </button>
                 </hbox>
@@ -42,7 +42,7 @@
         <rows>
             <row>
                 <textbox value="@bind(vm.newStorageType.name)" width="100%"/>
-                <button label="New" image="image/add.png" onClick="@command('insert')">
+                <button label="New" image="image/add.png" onClick="@global-command('insertStorageType')">
                     <custom-attributes org.zkoss.zul.image.preload="true"/>
                 </button>
             </row>
