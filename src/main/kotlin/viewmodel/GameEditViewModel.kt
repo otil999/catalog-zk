@@ -23,12 +23,15 @@ class GameEditViewModel : EntityManagerViewModel() {
     var series = mutableListOf<Series>()
     var storages = mutableListOf<Storage>()
 
+    private var affectedSeries: Series? = null
+
     @GlobalCommand
     @NotifyChange("editingGame", "series", "storages")
     fun editGame(@BindingParam("item") game: Game?) {
         storages = storageRepository.findAll().toMutableList()
         series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }
-        this.editingGame = game ?: Game()
+        editingGame = game ?: Game()
+        affectedSeries = editingGame.series
     }
 
     @Command
@@ -37,7 +40,7 @@ class GameEditViewModel : EntityManagerViewModel() {
             editingGame.series = null
         }
         try {
-            gameRepository.save(editingGame)
+            gameRepository.save(editingGame, affectedSeries)
             Messagebox.show("Game is saved successfully.", "Success", Messagebox.OK, Messagebox.INFORMATION)
         } catch (ex: Exception) {
             Messagebox.show("Error when saving game.", "Error", Messagebox.OK, Messagebox.ERROR)

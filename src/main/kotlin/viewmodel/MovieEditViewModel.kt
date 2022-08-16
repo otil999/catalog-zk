@@ -27,7 +27,7 @@ class MovieEditViewModel : EntityManagerViewModel() {
     fun editMovie(@BindingParam("item") movie: Movie?) {
         storages = storageRepository.findAll().toMutableList()
         series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }
-        this.editingMovie = movie ?: Movie()
+        editingMovie = movie ?: Movie()
         affectedSeries = editingMovie.series
     }
 

@@ -136,4 +136,10 @@ class GameRepository(entityManager: EntityManager) : AbstractRepository<Game>(en
         val idx = Random().nextInt(list.size)
         return listOf(list[idx])
     }
+
+    fun save(entity: Game, affectedSeries: Series?) {
+        super.save(entity)
+        affectedSeries?.let { entityManager.refresh(it) }
+        entity.series?.let { entityManager.refresh(it) }
+    }
 }
