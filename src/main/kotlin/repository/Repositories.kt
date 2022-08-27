@@ -142,4 +142,10 @@ class GameRepository(entityManager: EntityManager) : AbstractRepository<Game>(en
         affectedSeries?.let { entityManager.refresh(it) }
         entity.series?.let { entityManager.refresh(it) }
     }
+
+    fun recentlyPlayed(): List<Game> =
+        entityManager
+                .createQuery("select g from Game g order by updated desc", Game::class.java)
+                .resultList
+                .subList(0, 20)
 }

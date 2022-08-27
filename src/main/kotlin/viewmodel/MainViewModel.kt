@@ -20,101 +20,76 @@ class MainViewModel {
     var gameEditVisible = false
     var statVisible = false
     var statRecentlyViewedVisible = false
+    var statRecentlyPlayedVisible = false
+
+    private fun disableAll() {
+        emptyVisible = false
+        storageTypeVisible = false
+        storageVisible = false
+        seriesVisible = false
+        movieListVisible = false
+        movieEditVisible = false
+        gameListVisible = false
+        gameEditVisible = false
+        statVisible = false
+        statRecentlyViewedVisible = false
+        statRecentlyPlayedVisible = false
+    }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun showStorageType() {
-        emptyVisible = false
+        disableAll()
         storageTypeVisible = true
-        storageVisible = false
-        seriesVisible = false
-        movieListVisible = false
-        movieEditVisible = false
-        gameListVisible = false
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun showStorage() {
-        emptyVisible = false
-        storageTypeVisible = false
+        disableAll()
         storageVisible = true
-        seriesVisible = false
-        movieListVisible = false
-        movieEditVisible = false
-        gameListVisible = false
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun showSeries() {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
+        disableAll()
         seriesVisible = true
-        movieListVisible = false
-        movieEditVisible = false
-        gameListVisible = false
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
-        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+            "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+            "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun listMovies() {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
-        seriesVisible = false
+        disableAll()
         movieListVisible = true
-        movieEditVisible = false
-        gameListVisible = false
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun editMovie() {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
-        seriesVisible = false
-        movieListVisible = false
+        disableAll()
         movieEditVisible = true
-        gameListVisible = false
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun showMovieByStorage() {
         listMovies()
@@ -123,37 +98,21 @@ class MainViewModel {
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun listGames() {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
-        seriesVisible = false
-        movieListVisible = false
-        movieEditVisible = false
+        disableAll()
         gameListVisible = true
-        gameEditVisible = false
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun editGame(@BindingParam("item") game: Game?) {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
-        seriesVisible = false
-        movieListVisible = false
-        movieEditVisible = false
-        gameListVisible = false
+        disableAll()
         gameEditVisible = true
-        statVisible = false
-        statRecentlyViewedVisible = false
     }
 
     @Command
@@ -165,29 +124,30 @@ class MainViewModel {
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun statNumberOfAssets() {
-        emptyVisible = false
-        storageTypeVisible = false
-        storageVisible = false
-        seriesVisible = false
-        movieListVisible = false
-        movieEditVisible = false
-        gameListVisible = false
-        gameEditVisible = false
+        disableAll()
         statVisible = true
-        statRecentlyViewedVisible = false
     }
 
     @GlobalCommand
     @NotifyChange(
         "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
-        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible"
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
     )
     fun statRecentlyViewedMovies() {
-        listMovies()
-        movieListVisible = false
+        disableAll()
         statRecentlyViewedVisible = true
+    }
+
+    @GlobalCommand
+    @NotifyChange(
+        "emptyVisible", "storageTypeVisible", "storageVisible", "seriesVisible", "movieListVisible", "movieEditVisible",
+        "gameListVisible", "gameEditVisible", "statVisible", "statRecentlyViewedVisible", "statRecentlyPlayedVisible"
+    )
+    fun statRecentlyPlayedGames() {
+        disableAll()
+        statRecentlyPlayedVisible = true
     }
 }

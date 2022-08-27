@@ -37,8 +37,9 @@
         <menu label="Statistics">
             <menupopup>
                 <menuitem id="menuitem-stat-counts" label="Number of assets" onClick="@global-command('statNumberOfAssets')" onMouseOver='statustext.value="Show the history graph of number of items"'/>
+                <menuseparator/>
                 <menuitem id="menuitem-stat-movie-history" label="Recently viewed movies" onClick="@global-command('statRecentlyViewedMovies')" onMouseOver='statustext.value="List of recently viewed movies"'/>
-                <menuitem id="menuitem-stat-game-history" label="Last played games" onClick="@global-command('statLastPlayedGames')" onMouseOver='statustext.value="List of recently played games"'/>
+                <menuitem id="menuitem-stat-game-history" label="Recently played games" onClick="@global-command('statRecentlyPlayedGames')" onMouseOver='statustext.value="List of recently played games"'/>
             </menupopup>
         </menu>
     </menubar>
@@ -87,6 +88,7 @@
     <include id="content-edit-game" src="game-edit.zul" progressing="true" visible="@load(mainVm.gameEditVisible)"/>
     <include id="content-stat" src="stat.zul" progressing="true" visible="@load(mainVm.statVisible)"/>
     <include id="content-stat-recently-viewed" src="stat-recently-viewed.zul" progressing="true" visible="@load(mainVm.statRecentlyViewedVisible)"/>
+    <include id="content-stat-recently-played" src="stat-recently-played.zul" progressing="true" visible="@load(mainVm.statRecentlyPlayedVisible)"/>
     <toolbar>
         <label id="statustext" value="Idle"/>
     </toolbar>

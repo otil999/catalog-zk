@@ -2,11 +2,7 @@ package hu.otilsoft.catalog.viewmodel
 
 import hu.otilsoft.catalog.model.Game
 import hu.otilsoft.catalog.model.Series
-import hu.otilsoft.catalog.model.Storage
 import hu.otilsoft.catalog.repository.GameRepository
-import hu.otilsoft.catalog.repository.MediaRepository
-import hu.otilsoft.catalog.repository.SeriesRepository
-import hu.otilsoft.catalog.repository.StorageRepository
 import org.zkoss.bind.annotation.*
 import org.zkoss.zk.ui.event.InputEvent
 import org.zkoss.zul.Messagebox
@@ -28,6 +24,7 @@ class GameListViewModel : EntityManagerViewModel() {
             "randomLeastPlayed" -> gameRepository.randomLeastPlayed()
             "randomPlayed" -> gameRepository.randomPlayed()
             "series" -> gameRepository.findBySeries(series ?: Series())
+            "recentlyPlayed" -> gameRepository.recentlyPlayed()
             else -> gameRepository.findAll()
         }.toMutableList()
     }
@@ -63,4 +60,8 @@ class GameListViewModel : EntityManagerViewModel() {
         searchText = event.value
         games = gameRepository.findByName(searchText).toMutableList()
     }
+
+    @GlobalCommand
+    @NotifyChange("games", "refreshVisible", "searchVisible", "searchText", "editing", "storages")
+    fun statRecentlyPlayedGames() = listGames("recentlyPlayed", null)
 }
