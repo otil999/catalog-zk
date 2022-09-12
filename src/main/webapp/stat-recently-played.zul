@@ -20,10 +20,10 @@
             <row>
                 <label value="@load(each.name)" style="white-space:pre"/>
                 <label value="@load(each.release)"/>
-                <label value="@load(each.series.name)"/>
+                <label value="@load(each.series.name)" style="white-space:pre"/>
                 <label value="@load(each.seriesNum)"/>
                 <label value="@load(each.counter)" style="white-space:pre"/>
-                <label value="@load(each.updated) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
+                <label value="@load(each.lastPlayed) @converter(vm.localDateTimeConverter)" style="white-space:pre"/>
             </row>
         </template>
     </grid>

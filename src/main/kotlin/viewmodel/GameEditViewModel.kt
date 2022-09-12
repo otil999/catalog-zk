@@ -10,6 +10,7 @@ import hu.otilsoft.catalog.repository.StorageRepository
 import org.zkoss.bind.annotation.*
 import org.zkoss.zk.ui.event.InputEvent
 import org.zkoss.zul.Messagebox
+import java.time.LocalDateTime
 
 
 class GameEditViewModel : EntityManagerViewModel() {
@@ -24,6 +25,7 @@ class GameEditViewModel : EntityManagerViewModel() {
     var storages = mutableListOf<Storage>()
 
     private var affectedSeries: Series? = null
+    private var oldCounter: Int? = null
 
     @GlobalCommand
     @NotifyChange("editingGame", "series", "storages")
@@ -32,12 +34,16 @@ class GameEditViewModel : EntityManagerViewModel() {
         series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }
         editingGame = game ?: Game()
         affectedSeries = editingGame.series
+        oldCounter = game?.counter
     }
 
     @Command
     fun save() {
         if (editingGame.series?.name?.isBlank() == true) {
             editingGame.series = null
+        }
+        if (editingGame.counter != oldCounter) {
+            editingGame.lastPlayed = LocalDateTime.now()
         }
         try {
             gameRepository.save(editingGame, affectedSeries)

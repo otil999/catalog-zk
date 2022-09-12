@@ -7,6 +7,7 @@ import hu.otilsoft.catalog.repository.*
 import org.zkoss.bind.annotation.*
 import org.zkoss.zk.ui.Executions
 import org.zkoss.zul.Messagebox
+import java.time.LocalDateTime
 
 
 class MovieEditViewModel : EntityManagerViewModel() {
@@ -21,6 +22,7 @@ class MovieEditViewModel : EntityManagerViewModel() {
     var storages = mutableListOf<Storage>()
 
     private var affectedSeries: Series? = null
+    private var oldCounter: Int? = null
 
     @GlobalCommand
     @NotifyChange("editingMovie", "series", "storages")
@@ -29,12 +31,16 @@ class MovieEditViewModel : EntityManagerViewModel() {
         series = seriesRepository.findAll().toMutableList().apply { add(0, Series()) }
         editingMovie = movie ?: Movie()
         affectedSeries = editingMovie.series
+        oldCounter = movie?.counter
     }
 
     @Command
     fun save() {
         if (editingMovie.series?.name?.isBlank() == true) {
             editingMovie.series = null
+        }
+        if (oldCounter != editingMovie.counter) {
+            editingMovie.lastViewed = LocalDateTime.now()
         }
         try {
             movieRepository.save(editingMovie, affectedSeries)

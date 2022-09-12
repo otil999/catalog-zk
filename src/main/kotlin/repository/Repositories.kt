@@ -88,9 +88,9 @@ class MovieRepository(entityManager: EntityManager) : AbstractRepository<Movie>(
 
     fun recentlyViewed(): List<Movie> =
         entityManager
-            .createQuery("select m from Movie m order by updated desc", Movie::class.java)
+            .createQuery("select m from Movie m where last_viewed IS NOT NULL order by last_viewed desc", Movie::class.java)
+            .setMaxResults(20)
             .resultList
-            .subList(0, 20)
 
     fun save(entity: Movie, affectedSeries: Series?) {
         super.save(entity)
@@ -145,7 +145,7 @@ class GameRepository(entityManager: EntityManager) : AbstractRepository<Game>(en
 
     fun recentlyPlayed(): List<Game> =
         entityManager
-                .createQuery("select g from Game g order by updated desc", Game::class.java)
+                .createQuery("select g from Game g where last_played IS NOT NULL order by last_played desc", Game::class.java)
+                .setMaxResults(20)
                 .resultList
-                .subList(0, 20)
 }
