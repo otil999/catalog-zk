@@ -12,13 +12,11 @@ import org.zkoss.zul.Messagebox
 
 class MovieViewModel : EntityManagerViewModel() {
     private val movieRepository: MovieRepository by lazy { MovieRepository(entityManager) }
-    private val mediaRepository: MediaRepository by lazy { MediaRepository(entityManager) }
     private val seriesRepository: SeriesRepository by lazy { SeriesRepository(entityManager) }
     private val storageRepository: StorageRepository by lazy { StorageRepository(entityManager) }
     var editingMovie = Movie()
     var editing = false
     var movies = mutableListOf<Movie>()
-    val media = mediaRepository.findAll()
     var series = mutableListOf<Series>()
     var storages = mutableListOf<Storage>()
     var action = ""

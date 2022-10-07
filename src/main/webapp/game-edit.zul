@@ -32,14 +32,6 @@
                 <textbox value="@bind(vm.editingGame.link)" width="100%"/>
             </row>
             <row>
-                <label value="Media"/>
-                <combobox model="@load(vm.media)" selectedItem="@bind(vm.editingGame.media)">
-                    <template name="model">
-                        <comboitem label="${each.name}"/>
-                    </template>
-                </combobox>
-            </row>
-            <row>
                 <label value="Storage"/>
                 <combobox model="@load(vm.storages)" selectedItem="@bind(vm.editingGame.storage)">
                     <template name="model">

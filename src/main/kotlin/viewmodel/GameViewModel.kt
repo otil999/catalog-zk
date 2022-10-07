@@ -4,7 +4,6 @@ import hu.otilsoft.catalog.model.Game
 import hu.otilsoft.catalog.model.Series
 import hu.otilsoft.catalog.model.Storage
 import hu.otilsoft.catalog.repository.GameRepository
-import hu.otilsoft.catalog.repository.MediaRepository
 import hu.otilsoft.catalog.repository.SeriesRepository
 import hu.otilsoft.catalog.repository.StorageRepository
 import org.zkoss.bind.annotation.*
@@ -14,14 +13,12 @@ import org.zkoss.zul.Messagebox
 
 class GameViewModel : EntityManagerViewModel() {
     private val gameRepository: GameRepository by lazy { GameRepository(entityManager) }
-    private val mediaRepository: MediaRepository by lazy { MediaRepository(entityManager) }
     private val seriesRepository: SeriesRepository by lazy { SeriesRepository(entityManager) }
     private val storageRepository: StorageRepository by lazy { StorageRepository(entityManager) }
 
     var editingGame = Game()
     var editing = false
     var games = mutableListOf<Game>()
-    var media = mediaRepository.findAll()
     var series = mutableListOf<Series>()
     var action = ""
     var searchText = ""

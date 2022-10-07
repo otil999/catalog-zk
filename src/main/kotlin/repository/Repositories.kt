@@ -1,7 +1,6 @@
 package hu.otilsoft.catalog.repository
 
 import hu.otilsoft.catalog.model.Game
-import hu.otilsoft.catalog.model.Media
 import hu.otilsoft.catalog.model.Movie
 import hu.otilsoft.catalog.model.Series
 import hu.otilsoft.catalog.model.Storage
@@ -31,14 +30,6 @@ class  SeriesRepository(entityManager: EntityManager) : AbstractRepository<Serie
             .setParameter("keyword", "${name.toLowerCase()}%")
             .resultList
             .sortedWith { series1, series2 -> collator.compare(series1.name, series2.name) }
-}
-
-
-class MediaRepository(entityManager: EntityManager) : AbstractRepository<Media>(entityManager) {
-    override fun findAll(): List<Media> =
-        entityManager
-            .createQuery("select m from Media m order by m.name", Media::class.java)
-            .resultList
 }
 
 

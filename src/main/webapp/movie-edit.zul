@@ -39,14 +39,6 @@
                 </hbox>
             </row>
             <row>
-                <label value="Media"/>
-                <combobox model="@load(vm.media)" selectedItem="@bind(vm.editingMovie.media)">
-                    <template name="model">
-                        <comboitem label="${each.name}"/>
-                    </template>
-                </combobox>
-            </row>
-            <row>
                 <label value="Media number"/>
                 <textbox value="@bind(vm.editingMovie.mediaNumber)" width="100%"/>
             </row>

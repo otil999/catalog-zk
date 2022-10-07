@@ -4,23 +4,19 @@ import hu.otilsoft.catalog.model.Game
 import hu.otilsoft.catalog.model.Series
 import hu.otilsoft.catalog.model.Storage
 import hu.otilsoft.catalog.repository.GameRepository
-import hu.otilsoft.catalog.repository.MediaRepository
 import hu.otilsoft.catalog.repository.SeriesRepository
 import hu.otilsoft.catalog.repository.StorageRepository
 import org.zkoss.bind.annotation.*
-import org.zkoss.zk.ui.event.InputEvent
 import org.zkoss.zul.Messagebox
 import java.time.LocalDateTime
 
 
 class GameEditViewModel : EntityManagerViewModel() {
     private val gameRepository: GameRepository by lazy { GameRepository(entityManager) }
-    private val mediaRepository: MediaRepository by lazy { MediaRepository(entityManager) }
     private val seriesRepository: SeriesRepository by lazy { SeriesRepository(entityManager) }
     private val storageRepository: StorageRepository by lazy { StorageRepository(entityManager) }
 
     var editingGame = Game()
-    var media = mediaRepository.findAll()
     var series = mutableListOf<Series>()
     var storages = mutableListOf<Storage>()
 
